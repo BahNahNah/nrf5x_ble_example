@@ -32,6 +32,7 @@ int main() {
 	NRF_LOG_INFO("Device started.");
 	bluetooth_set_name("samu_example");
 	add_services();
+	setup_uart();
 	
 	advertising_init();
 	advertising_start();
@@ -64,12 +65,12 @@ void setup_uart() {
 	uart_init(&config, NULL);
 }
 
-void send_data_to_uart(uint8_t* data, uint16_t len) {
+void send_data_to_uart(const uint8_t* data, uint16_t len) {
 	//append length byte
 	uint8_t len_byte = len;
 	uart_write_queue(&len_byte, sizeof(len_byte));
 	//then data
-	uart_write_queue(data, len);
+	uart_write_queue((uint8_t *)data, len);
 }
 
 void add_services() {
@@ -114,7 +115,8 @@ void ble_evt_handler(ble_evt_t const * p_evt, void * p_context) {
 		const ble_gatts_evt_write_t *params = &p_evt->evt.gatts_evt.params.write;
 		NRF_LOG_INFO("<%i> Recieved %i bytes on handle %i", conn, params->len, params->handle);
 		NRF_LOG_HEXDUMP_INFO(params->data, params->len);
-		
+		//send over com
+		send_data_to_uart(params->data, params->len);
 		/*
 		 *	notification enable/disable are 2 bytes
 		 *	always on the cccd_handle.
