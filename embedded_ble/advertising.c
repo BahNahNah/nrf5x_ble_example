@@ -25,15 +25,15 @@ static ble_gap_adv_data_t encoded_adv_data;
  **/
 //
 
-
-//observer callback
-void advertiser_ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context) {
-	ble_advertising_on_ble_evt(p_ble_evt, p_context); //sdk handler.
-}
-
+//advertisement module instance.
 static ble_advertising_t adv;
-//observer context must be a pointer to static memory! else its juts conna gome though as null.
-NRF_SDH_BLE_OBSERVER(adv_ble_obs, BLE_ADV_BLE_OBSERVER_PRIO, advertiser_ble_evt_handler, &adv);
+
+/*this observer really isnt nessisary. 
+ *it basicly just restarts advertising on disconnect
+ */
+
+// NRF_SDH_BLE_OBSERVER(adv_ble_obs, BLE_ADV_BLE_OBSERVER_PRIO, ble_advertising_on_ble_evt, &adv);
+
 
 
 

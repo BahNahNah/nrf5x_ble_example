@@ -68,9 +68,10 @@ void setup_uart() {
 void send_data_to_uart(const uint8_t* data, uint16_t len) {
 	//append length byte
 	uint8_t len_byte = len;
-	uart_write_queue(&len_byte, sizeof(len_byte));
+	uart_write_queue_append(&len_byte, sizeof(len_byte));
 	//then data
-	uart_write_queue((uint8_t *)data, len);
+	uart_write_queue_append((uint8_t *)data, len);
+	uart_write_queue_flush();
 }
 
 void add_services() {

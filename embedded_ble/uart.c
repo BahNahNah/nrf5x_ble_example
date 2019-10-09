@@ -6,6 +6,7 @@ static nrfx_uart_t uart = NRFX_UART_INSTANCE(0);
 static uint16_t tx_total_queued = 0;
 static uint16_t tx_sent = 0;
 static uint8_t tx_buffer[500];
+static bool tx_in_progress = false;
 
 static void uart_default_event_handler(nrfx_uart_event_t const * p_event, void * p_context) {
 	
@@ -18,12 +19,12 @@ static void uart_default_event_handler(nrfx_uart_event_t const * p_event, void *
 		 **/
 		tx_sent += p_event->data.rxtx.bytes;
 		if (tx_sent < tx_total_queued) {
-			uint16_t bytes_remaning =  tx_total_queued - tx_sent;
-			uart_write(&tx_buffer[tx_sent], bytes_remaning);
+			uart_write_queue_flush();
 		} else {
 			//reset buffer
 			tx_sent = 0;
 			tx_total_queued = 0;
+			tx_in_progress = false;
 		}
 	}break;
 	case NRFX_UART_EVT_RX_DONE: {
@@ -50,6 +51,18 @@ void uart_init(nrfx_uart_config_t *config, nrfx_uart_event_handler_t _evt_handle
 	APP_ERROR_CHECK(err);
 	nrfx_uart_rx_enable(&uart);
 }
+
+/*
+ *	the buffer must live up to 
+ *	the NRFX_UART_EVT_RX_DONE
+ *	event has triggered.
+ *
+ **/
+void uart_read(uint8_t * rx_buffer, uint16_t bytes_to_read) {
+	ret_code_t err = nrfx_uart_rx(&uart, rx_buffer, bytes_to_read);
+	APP_ERROR_CHECK(err);
+}
+
 
 
 /*
@@ -91,24 +104,29 @@ void uart_write(uint8_t *data, uint16_t len) {
  *
  *a better approach would be a circular buffer.
  **/
-void uart_write_queue(uint8_t *data, uint16_t len) {
-	
-	memcpy(&tx_buffer[tx_sent], data, len);
-	
-	if (!tx_total_queued) {
-		uart_write(&tx_buffer[tx_sent], len);
-	}
+void uart_write_queued(uint8_t *data, uint16_t len) {
+	uart_write_queue_append(data, len);
+	uart_write_queue_flush();
+}
+
+/*
+ *Write to the uart tx queue but dont atcualy send
+ **/
+void uart_write_queue_append(uint8_t *data, uint16_t len) {
+	memcpy(&tx_buffer[tx_total_queued], data, len);
 	tx_total_queued += len;
 }
 
-
 /*
- *	the buffer must live up to 
- *	the NRFX_UART_EVT_RX_DONE
- *	event has triggered.
- *
+ *send whats in the tx queue
  **/
-void uart_read(uint8_t * rx_buffer, uint16_t bytes_to_read) {
-	ret_code_t err = nrfx_uart_rx(&uart, rx_buffer, bytes_to_read);
-	APP_ERROR_CHECK(err);
+void uart_write_queue_flush() {
+	uint16_t bytes_remaning =  tx_total_queued - tx_sent;
+	if (tx_in_progress || !bytes_remaning) {
+		return;
+	}
+	tx_in_progress = true;
+	uart_write(&tx_buffer[tx_sent], bytes_remaning);
 }
+
+
