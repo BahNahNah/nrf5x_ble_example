@@ -44,6 +44,7 @@
     <string>com.sysprogs.arm.nordic.nrfx.ble_advertising</string>
     <string>com.sysprogs.arm.nordic.nrfx.ble_link_ctx_manager</string>
     <string>com.sysprogs.arm.nordic.nrfx.ble_nrf_ble_qwr</string>
+    <string>com.sysprogs.arm.nordic.nrfx.ble_nrf_ble_scan</string>
   </ReferencedFrameworks>
   <FrameworkProperties>
     <Entries>

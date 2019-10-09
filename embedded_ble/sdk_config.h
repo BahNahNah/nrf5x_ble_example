@@ -53,6 +53,48 @@
 #endif
 
 //==========================================================
+// <q> NRF_BLE_SCAN_ENABLED  - ble scanning
+
+#ifndef NRF_BLE_SCAN_ENABLED
+#define NRF_BLE_SCAN_ENABLED 1
+#endif
+
+#ifndef NRF_BLE_SCAN_BUFFER
+#define NRF_BLE_SCAN_BUFFER 32
+#endif
+
+#ifndef NRF_BLE_SCAN_SCAN_INTERVAL
+#define NRF_BLE_SCAN_SCAN_INTERVAL 200
+#endif
+
+#ifndef NRF_BLE_SCAN_SCAN_WINDOW
+#define NRF_BLE_SCAN_SCAN_WINDOW 55
+#endif
+
+#ifndef  NRF_BLE_SCAN_SCAN_DURATION
+#define  NRF_BLE_SCAN_SCAN_DURATION 100
+#endif
+
+#ifndef  NRF_BLE_SCAN_SUPERVISION_TIMEOUT
+#define  NRF_BLE_SCAN_SUPERVISION_TIMEOUT 400
+#endif
+
+#ifndef  NRF_BLE_SCAN_MIN_CONNECTION_INTERVAL
+#define  NRF_BLE_SCAN_MIN_CONNECTION_INTERVAL 20
+#endif
+
+#ifndef  NRF_BLE_SCAN_MAX_CONNECTION_INTERVAL
+#define  NRF_BLE_SCAN_MAX_CONNECTION_INTERVAL 15
+#endif
+
+
+#ifndef  NRF_BLE_SCAN_SLAVE_LATENCY
+#define  NRF_BLE_SCAN_SLAVE_LATENCY 0
+#endif
+
+
+
+//==========================================================
 // <q> BLE_ADVERTISING_ENABLED  - ble_advertising - Advertising module
  
 

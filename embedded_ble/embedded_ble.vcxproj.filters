@@ -97,6 +97,12 @@
     <Filter Include="Header files\Device-specific files\GATT">
       <UniqueIdentifier>{05b0ee87-939c-4759-b048-ef35e3cb80dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source files\Device-specific files\BLE Nrf_Ble_Scan">
+      <UniqueIdentifier>{e8c4de31-6d15-491c-a68d-bab36538ff32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Device-specific files\BLE Nrf_Ble_Scan">
+      <UniqueIdentifier>{01886527-2957-4612-aa9f-229dd2267c4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="nrf5x.props">
@@ -1305,6 +1311,12 @@
     <ClInclude Include="$(BSP_ROOT)\nRF5x\components\ble\nrf_ble_gatt\nrf_ble_gatt.h">
       <Filter>Header files\Device-specific files\GATT</Filter>
     </ClInclude>
+    <ClCompile Include="$(BSP_ROOT)\nRF5x\nrf_ble_scan\nrf_ble_scan.c">
+      <Filter>Source files\Device-specific files\BLE Nrf_Ble_Scan</Filter>
+    </ClCompile>
+    <ClInclude Include="$(BSP_ROOT)\nRF5x\nrf_ble_scan\nrf_ble_scan.h">
+      <Filter>Header files\Device-specific files\BLE Nrf_Ble_Scan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="device.h">
@@ -1322,6 +1334,9 @@
     <ClInclude Include="uart.h">
       <Filter>Header files\components</Filter>
     </ClInclude>
+    <ClInclude Include="scanner.h">
+      <Filter>Header files\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SEGGER_RTT.c">
@@ -1334,6 +1349,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="uart.c">
+      <Filter>Source files\components</Filter>
+    </ClCompile>
+    <ClCompile Include="scanner.c">
       <Filter>Source files\components</Filter>
     </ClCompile>
   </ItemGroup>

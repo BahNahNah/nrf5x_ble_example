@@ -51,9 +51,11 @@
     <ClCompile Include="bluetooth.c" />
     <ClCompile Include="device.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="scanner.c" />
     <ClCompile Include="SEGGER_RTT.c" />
     <ClCompile Include="services.c" />
     <ClCompile Include="uart.c" />
+    <ClInclude Include="scanner.h" />
     <ClInclude Include="services.h" />
     <ClInclude Include="uart.h" />
     <None Include="nrf5x.props" />
@@ -458,5 +460,7 @@
     <ClInclude Include="$(BSP_ROOT)\nRF5x\ble_advertising\ble_advertising.h" />
     <ClCompile Include="$(BSP_ROOT)\nRF5x\components\ble\nrf_ble_gatt\nrf_ble_gatt.c" />
     <ClInclude Include="$(BSP_ROOT)\nRF5x\components\ble\nrf_ble_gatt\nrf_ble_gatt.h" />
+    <ClCompile Include="$(BSP_ROOT)\nRF5x\nrf_ble_scan\nrf_ble_scan.c" />
+    <ClInclude Include="$(BSP_ROOT)\nRF5x\nrf_ble_scan\nrf_ble_scan.h" />
   </ItemGroup>
 </Project>
