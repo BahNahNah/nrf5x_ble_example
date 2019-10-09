@@ -53,7 +53,9 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="SEGGER_RTT.c" />
     <ClCompile Include="services.c" />
+    <ClCompile Include="uart.c" />
     <ClInclude Include="services.h" />
+    <ClInclude Include="uart.h" />
     <None Include="nrf5x.props" />
     <ClCompile Include="$(BSP_ROOT)\nRF5x\modules\nrfx\mdk\system_nrf52.c" />
     <ClCompile Include="$(BSP_ROOT)\nRF5x\modules\nrfx\mdk\gcc_startup_nrf52.S" />

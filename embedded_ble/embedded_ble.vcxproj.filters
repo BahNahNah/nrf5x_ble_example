@@ -1319,6 +1319,9 @@
     <ClInclude Include="services.h">
       <Filter>Header files\components</Filter>
     </ClInclude>
+    <ClInclude Include="uart.h">
+      <Filter>Header files\components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SEGGER_RTT.c">
@@ -1329,6 +1332,9 @@
     </ClCompile>
     <ClCompile Include="main.c">
       <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="uart.c">
+      <Filter>Source files\components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

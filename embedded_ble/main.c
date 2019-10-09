@@ -6,7 +6,7 @@
 #include "bluetooth.h"
 #include "advertising.h"
 #include "services.h"
-
+#include "uart.h"
 
 #include "ble.h"
 #include "nrf_sdh_ble.h"
@@ -22,6 +22,7 @@ ble_gatts_char_handles_t my_char;
 
 void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
 void add_services();
+void setup_uart();
 
 int main() {
 	
@@ -29,7 +30,7 @@ int main() {
 	bluetooth_init();
 	
 	NRF_LOG_INFO("Device started.");
-	bluetooth_set_name("BLE_DEV");
+	bluetooth_set_name("samu_example");
 	add_services();
 	
 	advertising_init();
@@ -43,6 +44,32 @@ int main() {
 	device_run();
 	
 	return 0;
+}
+
+void setup_uart() {
+	nrfx_uart_config_t config = NRFX_UART_DEFAULT_CONFIG;
+	//pins for nina-b1 dev kit
+	config.pseltxd = 6;
+	config.pselrts = 8;
+	config.pselcts = 18;
+	config.pselrxd = 5;
+	
+	//pins for nrf51 dev kit (rigato?)
+	/*
+	config.pseltxd = 6;
+	config.pselrts = 5;
+	config.pselcts = 7;
+	config.pselrxd = 8;
+	*/
+	uart_init(&config, NULL);
+}
+
+void send_data_to_uart(uint8_t* data, uint16_t len) {
+	//append length byte
+	uint8_t len_byte = len;
+	uart_write_queue(&len_byte, sizeof(len_byte));
+	//then data
+	uart_write_queue(data, len);
 }
 
 void add_services() {
