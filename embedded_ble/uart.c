@@ -17,6 +17,7 @@ static void uart_default_event_handler(nrfx_uart_event_t const * p_event, void *
 		/*
 		 * handling the queued up writes.
 		 **/
+		tx_in_progress = false;
 		tx_sent += p_event->data.rxtx.bytes;
 		if (tx_sent < tx_total_queued) {
 			uart_write_queue_flush();
@@ -24,7 +25,6 @@ static void uart_default_event_handler(nrfx_uart_event_t const * p_event, void *
 			//reset buffer
 			tx_sent = 0;
 			tx_total_queued = 0;
-			tx_in_progress = false;
 		}
 	}break;
 	case NRFX_UART_EVT_RX_DONE: {
